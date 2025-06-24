@@ -6,6 +6,7 @@
     <title>Ourinet - Internet de Alta Velocidade</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* Global Styles */
         :root {
@@ -21,6 +22,7 @@
             --text-light: #777777;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --border-radius: 12px;
         }
 
         * {
@@ -49,7 +51,7 @@
         }
 
         section {
-            padding: 80px 0;
+            padding: 100px 0;
             position: relative;
             overflow: hidden;
         }
@@ -77,17 +79,20 @@
         img {
             max-width: 100%;
             height: auto;
+            display: block;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 14px 32px;
             border-radius: 50px;
             font-weight: 600;
             text-align: center;
             transition: var(--transition);
             border: none;
             cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary {
@@ -98,7 +103,7 @@
         .btn-primary:hover {
             background-color: var(--primary-dark);
             transform: translateY(-3px);
-            box-shadow: var(--shadow);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .btn-secondary {
@@ -111,19 +116,33 @@
             background-color: var(--light-color);
             color: var(--dark-color);
             transform: translateY(-3px);
-            box-shadow: var(--shadow);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             position: relative;
             z-index: 2;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
 
         .section-header h2 span {
@@ -144,21 +163,21 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .header.scrolled {
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
         }
 
         .header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            height: 90px;
         }
 
         .logo {
@@ -171,15 +190,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background-color: var(--primary-color);
             color: var(--dark-color);
             border-radius: 50%;
-            margin-right: 10px;
-            font-size: 1.2rem;
+            margin-right: 12px;
+            font-size: 1.3rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .logo-icon::after {
@@ -201,9 +221,10 @@
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--dark-color);
+            letter-spacing: -0.5px;
         }
 
         .logo h1 span {
@@ -215,24 +236,27 @@
         }
 
         .nav ul li {
-            margin-left: 30px;
+            margin-left: 35px;
         }
 
         .nav ul li a {
             font-weight: 500;
             color: var(--dark-color);
             position: relative;
+            font-size: 1.05rem;
+            padding: 5px 0;
         }
 
         .nav ul li a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
             transition: var(--transition);
+            border-radius: 3px;
         }
 
         .nav ul li a:hover::after {
@@ -241,16 +265,21 @@
 
         .mobile-menu {
             display: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        .mobile-menu:hover {
+            color: var(--primary-color);
         }
 
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--dark-color) 0%, var(--secondary-color) 100%);
             color: var(--light-color);
-            padding: 180px 0 100px;
+            padding: 180px 0 120px;
             position: relative;
             overflow: hidden;
         }
@@ -281,8 +310,8 @@
         }
 
         .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
             line-height: 1.3;
             position: relative;
             display: inline-block;
@@ -291,12 +320,12 @@
         .hero-content h1::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary-color), rgba(255,215,0,0));
-            border-radius: 3px;
+            border-radius: 4px;
         }
 
         .hero-content h1 span {
@@ -310,7 +339,7 @@
             bottom: -5px;
             left: 0;
             width: 100%;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
             transform: scaleX(0);
             transform-origin: right;
@@ -323,20 +352,21 @@
         }
 
         .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            margin-bottom: 35px;
             opacity: 0.9;
+            line-height: 1.7;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .hero-image {
             flex: 1;
             position: relative;
-            height: 400px;
+            height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -353,11 +383,17 @@
 
         .fiber-node {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background-color: var(--primary-color);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .fiber-node:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 25px var(--primary-color);
         }
 
         .fiber-connection {
@@ -370,8 +406,8 @@
 
         .wifi-animation {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -380,7 +416,7 @@
 
         .wifi-circle {
             position: absolute;
-            border: 2px solid var(--primary-color);
+            border: 3px solid var(--primary-color);
             border-radius: 50%;
             opacity: 0;
             animation: wifiPulse 3s infinite;
@@ -421,9 +457,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--primary-color);
-            text-shadow: 0 0 10px var(--primary-color);
+            text-shadow: 0 0 15px var(--primary-color);
         }
 
         @keyframes wifiPulse {
@@ -445,11 +481,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             background-color: var(--primary-color);
             border-radius: 50%;
-            box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+            box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color);
             animation: pulse 2s infinite;
             z-index: 3;
         }
@@ -459,7 +495,7 @@
                 box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
             }
             70% {
-                box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
+                box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
             }
             100% {
                 box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
@@ -486,7 +522,7 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             position: relative;
             z-index: 2;
@@ -494,13 +530,14 @@
 
         .feature-card {
             background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
             text-align: center;
             transition: var(--transition);
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .feature-card::before {
@@ -521,19 +558,19 @@
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
 
         .feature-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
             background-color: rgba(255, 215, 0, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             position: relative;
             transition: var(--transition);
@@ -546,25 +583,30 @@
         }
 
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
             position: relative;
         }
 
         .feature-card h3::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 40px;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
             transition: var(--transition);
         }
 
         .feature-card:hover h3::after {
             width: 80px;
+        }
+
+        .feature-card p {
+            font-size: 1.05rem;
+            color: var(--text-light);
         }
 
         /* Plans Section */
@@ -585,17 +627,18 @@
 
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
         .plan-card {
             background-color: var(--light-color);
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             overflow: hidden;
             transition: var(--transition);
             box-shadow: var(--shadow);
             position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .plan-card::before {
@@ -617,11 +660,12 @@
 
         .plan-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
 
         .plan-card.featured {
             border: 2px solid var(--primary-color);
+            transform: translateY(-10px);
         }
 
         .plan-badge {
@@ -634,10 +678,12 @@
             font-weight: 600;
             transform: rotate(45deg);
             z-index: 2;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .plan-header {
-            padding: 30px;
+            padding: 35px 30px;
             text-align: center;
             background-color: rgba(255, 215, 0, 0.1);
             position: relative;
@@ -661,7 +707,7 @@
         }
 
         .plan-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
@@ -674,18 +720,19 @@
         }
 
         .plan-price .price {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--primary-color);
+            line-height: 1;
         }
 
         .plan-price .period {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .plan-features {
-            padding: 30px;
+            padding: 35px 30px;
             position: relative;
             z-index: 1;
         }
@@ -694,15 +741,148 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            font-size: 1.05rem;
         }
 
         .plan-features ul li i {
-            margin-right: 10px;
+            margin-right: 12px;
             color: var(--primary-color);
+            font-size: 1.1rem;
         }
 
         .plan-footer {
-            padding: 0 30px 30px;
+            padding: 0 30px 35px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Radio Plans Section */
+        .radio-plans {
+            background-color: var(--gray-color);
+            position: relative;
+        }
+
+        .radio-plans::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,215,0,0.05)" stroke-width="0.5" stroke-dasharray="5,5"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+
+        .radio-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .radio-plan-card {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .radio-plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,215,0,0.05) 0%, rgba(255,215,0,0.01) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .radio-plan-card:hover::before {
+            opacity: 1;
+        }
+
+        .radio-plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .radio-plan-header {
+            padding: 35px 30px;
+            text-align: center;
+            background-color: rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radio-plan-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+
+        .radio-plan-card:hover .radio-plan-header::after {
+            transform: translateX(100%);
+        }
+
+        .radio-plan-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .radio-plan-price {
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .radio-plan-price .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .radio-plan-price .period {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .radio-plan-features {
+            padding: 35px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .radio-plan-features ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .radio-plan-features ul li i {
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .radio-plan-footer {
+            padding: 0 30px 35px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -710,7 +890,6 @@
 
         /* Coverage Section */
         .coverage {
-            background-color: var(--gray-color);
             position: relative;
         }
 
@@ -736,72 +915,42 @@
 
         .coverage-map {
             flex: 1;
-            background-color: var(--gray-color);
-            border-radius: 10px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 500px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .map-placeholder {
-            text-align: center;
-            color: var(--text-light);
+        #map {
+            width: 100%;
+            height: 100%;
             position: relative;
             z-index: 1;
         }
 
-        .map-placeholder i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .map-points {
+        .map-overlay {
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-        }
-
-        .map-point {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-color);
-            transform: scale(0);
-            animation: pointPulse 2s infinite;
-        }
-
-        @keyframes pointPulse {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,255,0.1) 0%, rgba(0,0,255,0.05) 100%);
+            z-index: 2;
+            pointer-events: none;
         }
 
         .coverage-form {
             flex: 1;
-            max-width: 400px;
+            max-width: 450px;
             background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .coverage-form::before {
@@ -816,8 +965,8 @@
         }
 
         .coverage-form h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
             text-align: center;
             position: relative;
         }
@@ -825,27 +974,35 @@
         .coverage-form h3::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
+            width: 60px;
+            height: 4px;
             background-color: var(--primary-color);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
         }
 
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 20px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
+            font-size: 1rem;
         }
 
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
@@ -856,7 +1013,7 @@
 
         .form-row {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .form-row .form-group {
@@ -892,14 +1049,15 @@
         }
 
         .testimonial-card {
-            min-width: 350px;
+            min-width: 380px;
             background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             scroll-snap-align: start;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .testimonial-card::before {
@@ -920,18 +1078,24 @@
 
         .quote-icon {
             position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 40px;
-            height: 40px;
+            top: -20px;
+            left: -20px;
+            width: 50px;
+            height: 50px;
             background-color: var(--primary-color);
             color: var(--dark-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
         }
 
         .testimonial-author {
@@ -940,11 +1104,11 @@
         }
 
         .author-avatar {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             overflow: hidden;
-            margin-right: 15px;
+            margin-right: 20px;
             border: 3px solid var(--primary-color);
             position: relative;
         }
@@ -973,11 +1137,12 @@
 
         .author-info h4 {
             margin-bottom: 5px;
+            font-size: 1.2rem;
         }
 
         .author-info span {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         /* Contact Section */
@@ -992,23 +1157,24 @@
 
         .info-item {
             display: flex;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .info-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background-color: rgba(255, 215, 0, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: var(--primary-color);
-            margin-right: 20px;
+            margin-right: 25px;
             flex-shrink: 0;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
         .info-icon::after {
@@ -1028,18 +1194,29 @@
         }
 
         .info-content h4 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .info-content p, .info-content a {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            transition: var(--transition);
+        }
+
+        .info-content a:hover {
+            color: var(--primary-color);
         }
 
         .contact-form {
             flex: 1;
             background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .contact-form::before {
@@ -1057,7 +1234,7 @@
         .footer {
             background-color: var(--dark-color);
             color: var(--light-color);
-            padding-top: 80px;
+            padding-top: 100px;
             position: relative;
         }
 
@@ -1076,14 +1253,15 @@
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            gap: 40px;
+            margin-bottom: 60px;
             position: relative;
             z-index: 2;
         }
 
         .footer-about .logo {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            display: inline-flex;
         }
 
         .footer-about .logo h1 {
@@ -1092,7 +1270,9 @@
 
         .footer-about p {
             opacity: 0.8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.8;
         }
 
         .social-links {
@@ -1101,26 +1281,28 @@
         }
 
         .social-links a {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            font-size: 1.2rem;
         }
 
         .social-links a:hover {
             background-color: var(--primary-color);
             color: var(--dark-color);
+            transform: translateY(-3px);
         }
 
         .footer-links h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .footer-links h4::after {
@@ -1129,30 +1311,32 @@
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
         }
 
         .footer-links ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-links ul li a {
             opacity: 0.8;
             transition: var(--transition);
+            font-size: 1.05rem;
+            display: inline-block;
         }
 
         .footer-links ul li a:hover {
             opacity: 1;
             color: var(--primary-color);
-            padding-left: 5px;
+            padding-left: 8px;
         }
 
         .footer-newsletter h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .footer-newsletter h4::after {
@@ -1161,13 +1345,15 @@
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
         }
 
         .footer-newsletter p {
             opacity: 0.8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.8;
         }
 
         .footer-newsletter .form-group {
@@ -1176,19 +1362,24 @@
 
         .footer-newsletter .form-group input {
             width: 100%;
-            padding: 12px 50px 12px 20px;
+            padding: 15px 60px 15px 25px;
             border: none;
             border-radius: 50px;
             background-color: rgba(255, 255, 255, 0.1);
             color: var(--light-color);
+            font-size: 1rem;
+        }
+
+        .footer-newsletter .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer-newsletter .form-group button {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 40px;
+            top: 5px;
+            right: 5px;
+            width: 45px;
+            height: 45px;
             background-color: var(--primary-color);
             color: var(--dark-color);
             border: none;
@@ -1197,12 +1388,17 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            margin: 5px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .footer-newsletter .form-group button:hover {
+            transform: rotate(15deg);
         }
 
         .footer-bottom {
             background-color: rgba(0, 0, 0, 0.2);
-            padding: 20px 0;
+            padding: 25px 0;
             text-align: center;
             position: relative;
             z-index: 2;
@@ -1210,20 +1406,20 @@
 
         .footer-bottom p {
             opacity: 0.7;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 0;
         }
 
         .footer-legal {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
+            gap: 25px;
+            margin-top: 15px;
         }
 
         .footer-legal a {
             opacity: 0.7;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             transition: var(--transition);
         }
 
@@ -1233,7 +1429,21 @@
         }
 
         /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+
         @media (max-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
             .hero .container {
                 flex-direction: column;
                 text-align: center;
@@ -1241,7 +1451,7 @@
             
             .hero-content {
                 max-width: 100%;
-                margin-bottom: 50px;
+                margin-bottom: 60px;
             }
             
             .hero-buttons {
@@ -1259,9 +1469,17 @@
             .contact-content {
                 flex-direction: column;
             }
+            
+            .footer-content {
+                gap: 30px;
+            }
         }
 
         @media (max-width: 768px) {
+            .header .container {
+                height: 80px;
+            }
+            
             .nav {
                 position: fixed;
                 top: 80px;
@@ -1269,9 +1487,10 @@
                 width: 80%;
                 height: calc(100vh - 80px);
                 background-color: var(--light-color);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
                 transition: var(--transition);
                 z-index: 999;
+                border-radius: 0 15px 15px 0;
             }
             
             .nav.active {
@@ -1280,17 +1499,43 @@
             
             .nav ul {
                 flex-direction: column;
-                padding: 30px;
+                padding: 40px 30px;
             }
             
             .nav ul li {
-                margin: 0 0 20px 0;
+                margin: 0 0 25px 0;
             }
             
             .mobile-menu {
                 display: block;
             }
             
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header h2::after {
+                height: 3px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card, .plan-card, .radio-plan-card, .testimonial-card {
+                padding: 30px 25px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
             section {
                 padding: 60px 0;
             }
@@ -1298,9 +1543,11 @@
             .section-header h2 {
                 font-size: 2rem;
             }
-        }
-
-        @media (max-width: 576px) {
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
             .hero-content h1 {
                 font-size: 2.2rem;
             }
@@ -1312,6 +1559,19 @@
             .form-row {
                 flex-direction: column;
                 gap: 0;
+            }
+            
+            .testimonial-card {
+                min-width: 280px;
+                padding: 30px;
+            }
+            
+            .footer-about .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-links h4, .footer-newsletter h4 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -1327,8 +1587,8 @@
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#planos">Planos</a></li>
+                    <li><a href="#planos-radio">Rádio</a></li>
                     <li><a href="#cobertura">Cobertura</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
@@ -1342,7 +1602,7 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Internet <span>Fibra Óptica</span> de Alta Velocidade</h1>
-                <p>A conexão mais rápida e estável para sua casa ou empresa com tecnologia de ponta e atendimento premium</p>
+                <p>A conexão mais rápida e estável para sua casa ou empresa com tecnologia de ponta e atendimento premium. Navegue sem limites com a qualidade Ourinet.</p>
                 <div class="hero-buttons">
                     <a href="#planos" class="btn btn-primary">Conheça nossos planos</a>
                     <a href="#contato" class="btn btn-secondary">Fale conosco</a>
@@ -1366,7 +1626,7 @@
         <div class="container">
             <div class="section-header">
                 <h2>Por que escolher a <span>Ourinet</span>?</h2>
-                <p>Oferecemos a melhor experiência em conectividade com tecnologia de ponta</p>
+                <p>Oferecemos a melhor experiência em conectividade com tecnologia de ponta e atendimento personalizado</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
@@ -1374,28 +1634,28 @@
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <h3>Ultra Velocidade</h3>
-                    <p>Até 1Gbps de velocidade com tecnologia de ponta em fibra óptica pura.</p>
+                    <p>Até 1Gbps de velocidade simétrica com tecnologia FTTH (Fibra até o usuário) e infraestrutura 100% óptica.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Segurança Digital</h3>
-                    <p>Proteção avançada contra ameaças digitais para todos os dispositivos conectados.</p>
+                    <p>Proteção avançada contra ameaças digitais com firewall empresarial incluso em todos os planos.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3>Suporte 24/7</h3>
-                    <p>Atendimento especializado disponível a qualquer momento do dia ou noite.</p>
+                    <p>Atendimento especializado disponível a qualquer momento via chat, telefone ou WhatsApp.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-percentage"></i>
                     </div>
                     <h3>Estabilidade Garantida</h3>
-                    <p>99,9% de disponibilidade garantida em contrato com compensação por falhas.</p>
+                    <p>99,9% de SLA (Acordo de Nível de Serviço) com compensação financeira em caso de indisponibilidade.</p>
                 </div>
             </div>
         </div>
@@ -1404,8 +1664,8 @@
     <section class="plans" id="planos">
         <div class="container">
             <div class="section-header">
-                <h2>Nossos <span>Planos</span></h2>
-                <p>Escolha o melhor para suas necessidades com a qualidade Ourinet</p>
+                <h2>Planos de <span>Fibra Óptica</span></h2>
+                <p>Internet residencial e empresarial com a melhor relação custo-benefício do mercado</p>
             </div>
             <div class="plans-grid">
                 <div class="plan-card">
@@ -1420,13 +1680,14 @@
                         <ul>
                             <li><i class="fas fa-check"></i> 100 Mbps dedicados</li>
                             <li><i class="fas fa-check"></i> Upload ilimitado</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi grátis</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi Dual Band</li>
                             <li><i class="fas fa-check"></i> Instalação gratuita</li>
                             <li><i class="fas fa-check"></i> 1 IP fixo incluído</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
                         </ul>
                     </div>
                     <div class="plan-footer">
-                        <a href="#" class="btn btn-primary">Contratar</a>
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
                     </div>
                 </div>
                 <div class="plan-card featured">
@@ -1442,14 +1703,15 @@
                         <ul>
                             <li><i class="fas fa-check"></i> 300 Mbps dedicados</li>
                             <li><i class="fas fa-check"></i> Upload ilimitado</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi premium</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi Mesh</li>
                             <li><i class="fas fa-check"></i> Instalação gratuita</li>
                             <li><i class="fas fa-check"></i> Antivírus grátis</li>
                             <li><i class="fas fa-check"></i> 2 IPs fixos</li>
+                            <li><i class="fas fa-check"></i> Prioridade no suporte</li>
                         </ul>
                     </div>
                     <div class="plan-footer">
-                        <a href="#" class="btn btn-primary">Contratar</a>
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
                     </div>
                 </div>
                 <div class="plan-card">
@@ -1464,15 +1726,95 @@
                         <ul>
                             <li><i class="fas fa-check"></i> 1 Gbps dedicado</li>
                             <li><i class="fas fa-check"></i> Upload ilimitado</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi premium</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi 6 Mesh</li>
                             <li><i class="fas fa-check"></i> Instalação gratuita</li>
                             <li><i class="fas fa-check"></i> Pacote segurança completo</li>
-                            <li><i class="fas fa-check"></i> Prioridade no suporte</li>
+                            <li><i class="fas fa-check"></i> Suporte 24h dedicado</li>
                             <li><i class="fas fa-check"></i> 5 IPs fixos</li>
                         </ul>
                     </div>
                     <div class="plan-footer">
-                        <a href="#" class="btn btn-primary">Contratar</a>
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="radio-plans" id="planos-radio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Planos de <span>Rádio</span></h2>
+                <p>Internet via rádio para regiões onde a fibra óptica ainda não está disponível</p>
+            </div>
+            <div class="radio-plans-grid">
+                <div class="radio-plan-card">
+                    <div class="radio-plan-header">
+                        <h3>Rádio Básico</h3>
+                        <div class="radio-plan-price">
+                            <span class="price">R$ 89,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="radio-plan-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 50 Mbps dedicados</li>
+                            <li><i class="fas fa-check"></i> Upload de 20 Mbps</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi grátis</li>
+                            <li><i class="fas fa-check"></i> Instalação gratuita</li>
+                            <li><i class="fas fa-check"></i> Estabilidade garantida</li>
+                            <li><i class="fas fa-check"></i> Suporte técnico especializado</li>
+                        </ul>
+                    </div>
+                    <div class="radio-plan-footer">
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
+                    </div>
+                </div>
+                <div class="radio-plan-card featured">
+                    <div class="plan-badge">Popular</div>
+                    <div class="radio-plan-header">
+                        <h3>Rádio Plus</h3>
+                        <div class="radio-plan-price">
+                            <span class="price">R$ 129,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="radio-plan-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 100 Mbps dedicados</li>
+                            <li><i class="fas fa-check"></i> Upload de 50 Mbps</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi Dual Band</li>
+                            <li><i class="fas fa-check"></i> Instalação gratuita</li>
+                            <li><i class="fas fa-check"></i> 99% de disponibilidade</li>
+                            <li><i class="fas fa-check"></i> Prioridade no suporte</li>
+                            <li><i class="fas fa-check"></i> 1 IP fixo incluído</li>
+                        </ul>
+                    </div>
+                    <div class="radio-plan-footer">
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
+                    </div>
+                </div>
+                <div class="radio-plan-card">
+                    <div class="radio-plan-header">
+                        <h3>Rádio Empresarial</h3>
+                        <div class="radio-plan-price">
+                            <span class="price">R$ 199,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="radio-plan-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 200 Mbps dedicados</li>
+                            <li><i class="fas fa-check"></i> Upload de 100 Mbps</li>
+                            <li><i class="fas fa-check"></i> Wi-Fi Professional</li>
+                            <li><i class="fas fa-check"></i> Instalação gratuita</li>
+                            <li><i class="fas fa-check"></i> 99,5% de disponibilidade</li>
+                            <li><i class="fas fa-check"></i> Suporte 24h dedicado</li>
+                            <li><i class="fas fa-check"></i> 2 IPs fixos incluídos</li>
+                        </ul>
+                    </div>
+                    <div class="radio-plan-footer">
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
                     </div>
                 </div>
             </div>
@@ -1483,27 +1825,33 @@
         <div class="container">
             <div class="section-header">
                 <h2>Nossa <span>Cobertura</span></h2>
-                <p>Verifique se atendemos sua região com nossa rede exclusiva</p>
+                <p>Verifique se atendemos sua região com nossa rede exclusiva de fibra óptica e rádio</p>
             </div>
             <div class="coverage-content">
                 <div class="coverage-map">
-                    <div class="map-placeholder">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <p>Mapa de cobertura interativo</p>
-                    </div>
-                    <div class="map-points" id="mapPoints"></div>
+                    <div id="map"></div>
+                    <div class="map-overlay"></div>
                 </div>
                 <div class="coverage-form">
                     <h3>Verifique sua região</h3>
                     <form id="coverage-checker">
                         <div class="form-group">
-                            <input type="text" placeholder="CEP" required>
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" placeholder="Digite seu CEP" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Endereço">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" placeholder="Rua, Avenida, etc.">
                         </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Número">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="numero">Número</label>
+                                <input type="text" id="numero" placeholder="Número">
+                            </div>
+                            <div class="form-group">
+                                <label for="bairro">Bairro</label>
+                                <input type="text" id="bairro" placeholder="Bairro">
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Verificar disponibilidade</button>
                     </form>
@@ -1516,7 +1864,7 @@
         <div class="container">
             <div class="section-header">
                 <h2>O que dizem <span>nossos clientes</span></h2>
-                <p>Depoimentos de quem já experimentou nossa rede exclusiva</p>
+                <p>Depoimentos reais de quem já experimentou nossa rede exclusiva</p>
             </div>
             <div class="testimonials-slider">
                 <div class="testimonial-card">
@@ -1570,6 +1918,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p>Na zona rural onde moro, a internet via rádio da Ourinet foi a única que conseguiu atender com qualidade. Velocidade constante e suporte que realmente resolve os problemas. Depois de anos sofrendo com conexão ruim, finalmente tenho internet decente.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Cliente">
+                        </div>
+                        <div class="author-info">
+                            <h4>Roberto Santos</h4>
+                            <span>Produtor Rural</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1588,7 +1953,7 @@
                         </div>
                         <div class="info-content">
                             <h4>Telefone</h4>
-                            <p>(00) 1234-5678</p>
+                            <a href="tel:00012345678">(00) 1234-5678</a>
                         </div>
                     </div>
                     <div class="info-item">
@@ -1597,7 +1962,7 @@
                         </div>
                         <div class="info-content">
                             <h4>Email</h4>
-                            <p>contato@Ourinetpro.com.br</p>
+                            <a href="mailto:contato@ourinet.com.br">contato@ourinet.com.br</a>
                         </div>
                     </div>
                     <div class="info-item">
@@ -1623,17 +1988,21 @@
                     <form id="contactForm">
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="text" placeholder="Nome" required>
+                                <label for="nome">Nome</label>
+                                <input type="text" id="nome" placeholder="Seu nome completo" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" placeholder="Email" required>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Seu melhor email" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Assunto">
+                            <label for="assunto">Assunto</label>
+                            <input type="text" id="assunto" placeholder="Sobre o que deseja falar?">
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Mensagem" required></textarea>
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" placeholder="Escreva sua mensagem aqui" required rows="5"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
                     </form>
@@ -1650,18 +2019,21 @@
                         <span class="logo-icon"><i class="fa-solid fa-wifi"></i></span>
                         <h1>Ouri<span>Net</span></h1>
                     </div>
-                    <p>Oferecendo a melhor experiência em internet fibra óptica com velocidade, estabilidade e atendimento de excelência.</p>
+                    <p>Oferecendo a melhor experiência em internet fibra óptica e rádio com velocidade, estabilidade e atendimento de excelência desde 2010.</p>
                     <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h4>Links Rápidos</h4>
                     <ul>
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#planos">Planos</a></li>
+                        <li><a href="#planos">Planos Fibra</a></li>
+                        <li><a href="#planos-radio">Planos Rádio</a></li>
                         <li><a href="#cobertura">Cobertura</a></li>
-                        <li><a href="#sobre">Sobre Nós</a></li>
                         <li><a href="#contato">Contato</a></li>
                     </ul>
                 </div>
@@ -1670,8 +2042,20 @@
                     <ul>
                         <li><a href="#">Área do Cliente</a></li>
                         <li><a href="https://www.nperf.com/pt/">Teste de Velocidade</a></li>
+                        <li><a href="#">Perguntas Frequentes</a></li>
                         <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Portal de Notícias</a></li>
                     </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Assine nossa newsletter e receba novidades e promoções exclusivas diretamente no seu email.</p>
+                    <form id="newsletterForm">
+                        <div class="form-group">
+                            <input type="email" placeholder="Seu melhor email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1681,11 +2065,13 @@
                 <div class="footer-legal">
                     <a href="#">Termos de Uso</a>
                     <a href="#">Política de Privacidade</a>
+                    <a href="#">Contrato de Adesão</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile Menu Toggle
@@ -1727,7 +2113,7 @@
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80,
+                            top: targetElement.offsetTop - 90,
                             behavior: 'smooth'
                         });
                     }
@@ -1736,84 +2122,116 @@
             
             // Create fiber optic network animation
             const fiberNetwork = document.getElementById('fiberNetwork');
-            const containerWidth = fiberNetwork.parentElement.offsetWidth;
-            const containerHeight = fiberNetwork.parentElement.offsetHeight;
-            
-            // Create nodes
-            const nodeCount = 15;
-            const nodes = [];
-            
-            for (let i = 0; i < nodeCount; i++) {
-                const node = document.createElement('div');
-                node.className = 'fiber-node';
+            if (fiberNetwork) {
+                const containerWidth = fiberNetwork.parentElement.offsetWidth;
+                const containerHeight = fiberNetwork.parentElement.offsetHeight;
                 
-                // Random position within container with padding
-                const x = 50 + Math.random() * (containerWidth - 100);
-                const y = 50 + Math.random() * (containerHeight - 100);
+                // Create nodes
+                const nodeCount = 15;
+                const nodes = [];
                 
-                node.style.left = `${x}px`;
-                node.style.top = `${y}px`;
+                for (let i = 0; i < nodeCount; i++) {
+                    const node = document.createElement('div');
+                    node.className = 'fiber-node';
+                    
+                    // Random position within container with padding
+                    const x = 50 + Math.random() * (containerWidth - 100);
+                    const y = 50 + Math.random() * (containerHeight - 100);
+                    
+                    node.style.left = `${x}px`;
+                    node.style.top = `${y}px`;
+                    
+                    nodes.push({ element: node, x, y });
+                    fiberNetwork.appendChild(node);
+                }
                 
-                nodes.push({ element: node, x, y });
-                fiberNetwork.appendChild(node);
+                // Create connections between nodes
+                nodes.forEach((nodeA, i) => {
+                    // Connect to 2-3 closest nodes
+                    const closestNodes = nodes
+                        .map((nodeB, j) => ({ node: nodeB, distance: Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y), index: j }))
+                        .filter(item => item.index !== i)
+                        .sort((a, b) => a.distance - b.distance)
+                        .slice(0, 2 + Math.floor(Math.random() * 2));
+                    
+                    closestNodes.forEach(item => {
+                        const nodeB = item.node;
+                        
+                        const connection = document.createElement('div');
+                        connection.className = 'fiber-connection';
+                        
+                        const length = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
+                        const angle = Math.atan2(nodeB.y - nodeA.y, nodeB.x - nodeA.x) * 180 / Math.PI;
+                        
+                        connection.style.width = `${length}px`;
+                        connection.style.left = `${nodeA.x}px`;
+                        connection.style.top = `${nodeA.y}px`;
+                        connection.style.transform = `rotate(${angle}deg)`;
+                        connection.style.opacity = 0.2 + Math.random() * 0.3;
+                        
+                        fiberNetwork.appendChild(connection);
+                        
+                        // Animate the connection
+                        let direction = 1;
+                        setInterval(() => {
+                            const currentOpacity = parseFloat(connection.style.opacity);
+                            if (currentOpacity > 0.5) direction = -1;
+                            if (currentOpacity < 0.2) direction = 1;
+                            connection.style.opacity = (currentOpacity + direction * 0.01).toString();
+                        }, 50);
+                    });
+                });
             }
             
-            // Create connections between nodes
-            nodes.forEach((nodeA, i) => {
-                // Connect to 2-3 closest nodes
-                const closestNodes = nodes
-                    .map((nodeB, j) => ({ node: nodeB, distance: Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y), index: j }))
-                    .filter(item => item.index !== i)
-                    .sort((a, b) => a.distance - b.distance)
-                    .slice(0, 2 + Math.floor(Math.random() * 2));
+            // Initialize Map
+            const mapElement = document.getElementById('map');
+            if (mapElement) {
+                // Coordinates for the map center (example coordinates for Brazil)
+                const map = L.map('map').setView([-15.7801, -47.9292], 12);
                 
-                closestNodes.forEach(item => {
-                    const nodeB = item.node;
-                    
-                    const connection = document.createElement('div');
-                    connection.className = 'fiber-connection';
-                    
-                    const length = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
-                    const angle = Math.atan2(nodeB.y - nodeA.y, nodeB.x - nodeA.x) * 180 / Math.PI;
-                    
-                    connection.style.width = `${length}px`;
-                    connection.style.left = `${nodeA.x}px`;
-                    connection.style.top = `${nodeA.y}px`;
-                    connection.style.transform = `rotate(${angle}deg)`;
-                    connection.style.opacity = 0.2 + Math.random() * 0.3;
-                    
-                    fiberNetwork.appendChild(connection);
-                    
-                    // Animate the connection
-                    let direction = 1;
-                    setInterval(() => {
-                        const currentOpacity = parseFloat(connection.style.opacity);
-                        if (currentOpacity > 0.5) direction = -1;
-                        if (currentOpacity < 0.2) direction = 1;
-                        connection.style.opacity = (currentOpacity + direction * 0.01).toString();
-                    }, 50);
+                // Add tile layer (OpenStreetMap)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                
+                // Add coverage areas (example coordinates)
+                const coverageAreas = [
+                    { coords: [-15.78, -47.92], radius: 2000, color: '#FFD700' },
+                    { coords: [-15.79, -47.94], radius: 1500, color: '#FFD700' },
+                    { coords: [-15.77, -47.91], radius: 1800, color: '#FFD700' },
+                    { coords: [-15.76, -47.95], radius: 2500, color: '#FFD700' }
+                ];
+                
+                coverageAreas.forEach(area => {
+                    L.circle(area.coords, {
+                        color: area.color,
+                        fillColor: area.color,
+                        fillOpacity: 0.3,
+                        radius: area.radius
+                    }).addTo(map);
                 });
-            });
-            
-            // Create pulsing dots for coverage map
-            const mapPoints = document.getElementById('mapPoints');
-            if (mapPoints) {
-                const pointCount = 20;
                 
-                for (let i = 0; i < pointCount; i++) {
-                    const point = document.createElement('div');
-                    point.className = 'map-point';
-                    
-                    // Random position within map
-                    const x = Math.random() * 100;
-                    const y = Math.random() * 100;
-                    
-                    point.style.left = `${x}%`;
-                    point.style.top = `${y}%`;
-                    point.style.animationDelay = `${Math.random() * 2}s`;
-                    
-                    mapPoints.appendChild(point);
-                }
+                // Add markers for radio towers (example coordinates)
+                const radioTowers = [
+                    { coords: [-15.785, -47.925], name: 'Torre Centro' },
+                    { coords: [-15.775, -47.935], name: 'Torre Norte' },
+                    { coords: [-15.795, -47.915], name: 'Torre Sul' }
+                ];
+                
+                radioTowers.forEach(tower => {
+                    L.marker(tower.coords, {
+                        icon: L.divIcon({
+                            className: 'radio-tower-marker',
+                            html: '<i class="fas fa-broadcast-tower" style="color: #FF6B00; font-size: 24px;"></i>',
+                            iconSize: [24, 24]
+                        })
+                    }).addTo(map)
+                    .bindPopup(`<b>${tower.name}</b><br>Ponto de acesso rádio`);
+                });
+                
+                // Fit map to show all coverage areas
+                const bounds = L.latLngBounds(coverageAreas.map(area => area.coords));
+                map.fitBounds(bounds.pad(0.2));
             }
             
             // Testimonials slider
@@ -1879,7 +2297,7 @@
             
             // Animation on scroll
             const animateOnScroll = function() {
-                const elements = document.querySelectorAll('.feature-card, .plan-card, .testimonial-card');
+                const elements = document.querySelectorAll('.feature-card, .plan-card, .radio-plan-card, .testimonial-card');
                 
                 elements.forEach(element => {
                     const elementPosition = element.getBoundingClientRect().top;
@@ -1893,7 +2311,7 @@
             };
             
             // Set initial state for animated elements
-            const animatedElements = document.querySelectorAll('.feature-card, .plan-card, .testimonial-card');
+            const animatedElements = document.querySelectorAll('.feature-card, .plan-card, .radio-plan-card, .testimonial-card');
             animatedElements.forEach(element => {
                 element.style.opacity = '0';
                 element.style.transform = 'translateY(20px)';
