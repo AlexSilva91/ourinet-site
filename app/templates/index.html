@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ourinet - Internet de Alta Velocidade</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -66,22 +67,22 @@
                     <div class="feature-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
-                    <h3>Ultra Velocidade</h3>
-                    <p>Até 1Gbps de velocidade simétrica com tecnologia FTTH (Fibra até o usuário) e infraestrutura 100% óptica.</p>
+                    <h3>Alta Performance</h3>
+                    <p>Planos com até 1Gbps de velocidade, utilizando tecnologia FTTH e infraestrutura 100% em fibra óptica.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Segurança Digital</h3>
-                    <p>Proteção avançada contra ameaças digitais com firewall empresarial incluso em todos os planos.</p>
+                    <h3>Rede Segura</h3>
+                    <p>Nossa infraestrutura conta com proteção contra ameaças, garantindo mais segurança para sua navegação.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
-                    <h3>Suporte 24/7</h3>
-                    <p>Atendimento especializado disponível a qualquer momento via chat, telefone ou WhatsApp.</p>
+                    <h3>Suporte Premium</h3>
+                    <p>Conte com atendimento rápido e eficiente todos os dias, das 7h às 21h. Nosso time está pronto para te ajudar sempre que precisar.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -97,22 +98,36 @@
     <section class="plans" id="planos">
         <div class="container">
             <div class="section-header">
-                <h2>Planos de <span>Fibra Óptica</span></h2>
-                <p>Internet residencial e empresarial com a melhor relação custo-benefício do mercado</p>
+                <h2>PLANOS FIBRA</h2>
+                <p>Na Ourinet você tem muitos mais, pagando <strong>muito menos</strong>.</p>
             </div>
             <div class="plans-grid">
                 <div class="plan-card">
                     <div class="plan-header">
-                        <h3>Básico</h3>
+                        <h3>200 MB</h3>
                         <div class="plan-price">
-                            <span class="price">R$ 99,90</span>
+                            <span class="price">R$ 79,90</span>
                             <span class="period">/mês</span>
                         </div>
                     </div>
                     <div class="plan-features">
                         <ul>
-                            <li><i class="fas fa-check"></i> 200Mbps</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi Dual Band</li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Wi-Fi Plus
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Suporte técnico especializado
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                2 telas de TV
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Deezer Premium
+                            </li>
                         </ul>
                     </div>
                     <div class="plan-footer">
@@ -122,19 +137,29 @@
                 <div class="plan-card featured">
                     <div class="plan-badge">Popular</div>
                     <div class="plan-header">
-                        <h3>Premium</h3>
+                        <h3>400 MB</h3>
                         <div class="plan-price">
-                            <span class="price">R$ 149,90</span>
+                            <span class="price">R$ 99,90</span>
                             <span class="period">/mês</span>
                         </div>
                     </div>
                     <div class="plan-features">
                         <ul>
-                            <li><i class="fas fa-check"></i> 300 Mbps</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi 5G</li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Wi-Fi Plus
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Suporte técnico especializado
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                4 telas de TV
+                            </li>
                             <li class="deezer-feature">
                                 <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
-                                Deezer Premium incluso
+                                Deezer Premium
                             </li>
                         </ul>
                     </div>
@@ -144,16 +169,62 @@
                 </div>
                 <div class="plan-card">
                     <div class="plan-header">
-                        <h3>Ultra</h3>
+                        <h3>600 MB</h3>
                         <div class="plan-price">
-                            <span class="price">R$ 199,90</span>
+                            <span class="price">R$ 119,90</span>
                             <span class="period">/mês</span>
                         </div>
                     </div>
                     <div class="plan-features">
                         <ul>
-                            <li><i class="fas fa-check"></i> 1 Gbps</li>
-                            <li><i class="fas fa-check"></i> Wi-Fi 6</li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Wi-Fi Plus
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Suporte técnico especializado
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                5 telas de TV
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Deezer Premium
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contato" class="btn btn-primary">Contratar</a>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3>1 GB</h3>
+                        <div class="plan-price">
+                            <span class="price">R$ 149,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Wi-Fi Plus
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Suporte técnico especializado
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                6 telas de TV
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Deezer Premium
+                            </li>
                         </ul>
                     </div>
                     <div class="plan-footer">
@@ -168,22 +239,31 @@
         <div class="container">
             <div class="section-header">
                 <h2>Planos de <span>Rádio</span></h2>
-                <p>Internet via rádio para regiões onde a fibra óptica ainda não está disponível</p>
+                <p>Internet via rádio para zonas rurais</p>
             </div>
             <div class="radio-plans-grid">
                 <div class="radio-plan-card">
                     <div class="radio-plan-header">
-                        <h3>Rádio Básico</h3>
+                        <h3>Rádio Rural</h3>
                         <div class="radio-plan-price">
-                            <span class="price">R$ 89,90</span>
+                            <span class="price">R$ 99,90</span>
                             <span class="period">/mês</span>
                         </div>
                     </div>
                     <div class="radio-plan-features">
                         <ul>
-                            <li><i class="fas fa-check"></i> 30 Mbps</li>
-                            <li><i class="fas fa-check"></i> Estabilidade garantida</li>
-                            <li><i class="fas fa-check"></i> Suporte técnico especializado</li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/speed.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                30 Mbps
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/shield.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Estabilidade garantida
+                            </li>
+                            <li class="deezer-feature">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                Suporte técnico especializado
+                            </li>
                         </ul>
                     </div>
                     <div class="radio-plan-footer">
@@ -392,7 +472,7 @@
                         <span class="logo-icon"><i class="fa-solid fa-wifi"></i></span>
                         <h1>OuriNet</h1>
                     </div>
-                    <p>Oferecendo a melhor experiência em internet fibra óptica e rádio com velocidade, estabilidade e atendimento de excelência desde 2010.</p>
+                    <p>Oferecendo a melhor experiência em internet fibra óptica e rádio com velocidade, estabilidade e atendimento de excelência desde 2004.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-whatsapp"></i></a>

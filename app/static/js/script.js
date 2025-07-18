@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mapElement = document.getElementById('map');
     if (mapElement) {
         // Coordinates for the map center (example coordinates for Brazil)
-        const map = L.map('map').setView([-15.7801, -47.9292], 12);
+        const map = L.map('map').setView([-7.884913749549813, -40.08501742303437], 12);
         
         // Add tile layer (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add coverage areas (example coordinates)
         const coverageAreas = [
-            { coords: [-15.78, -47.92], radius: 2000, color: '#FFD700' },
-            { coords: [-15.79, -47.94], radius: 1500, color: '#FFD700' },
-            { coords: [-15.77, -47.91], radius: 1800, color: '#FFD700' },
-            { coords: [-15.76, -47.95], radius: 2500, color: '#FFD700' }
+            { coords: [-7.884913749549813, -40.08501742303437], radius: 2000, color: '#FFD700' },
+            { coords: [-7.510507213934869, -39.72169733051941], radius: 1500, color: '#FFD700' },
+            { coords: [-8.162862803433272, -40.614694358618024], radius: 1800, color: '#FFD700' },
+            { coords: [-8.239236980070817, -40.330620585271824], radius: 2500, color: '#FFD700' }
         ];
         
         coverageAreas.forEach(area => {
@@ -138,9 +138,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add markers for radio towers (example coordinates)
         const radioTowers = [
-            { coords: [-15.785, -47.925], name: 'Torre Centro' },
-            { coords: [-15.775, -47.935], name: 'Torre Norte' },
-            { coords: [-15.795, -47.915], name: 'Torre Sul' }
+            { coords: [-7.884913749549813, -40.08501742303437], name: 'Central Ouricuri' },
+            { coords: [-7.510507213934869, -39.72169733051941], name: 'Filial EXU' },
+            { coords: [-8.162862803433272, -40.614694358618024], name: 'Filial Santa Filomena' },
+            { coords: [-8.239236980070817, -40.330620585271824], name: 'Filial Santa Cruz' }
         ];
         
         radioTowers.forEach(tower => {
