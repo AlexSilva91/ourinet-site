@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ourinet - Internet de Alta Velocidade</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
     <header class="header">
         <div class="container">
             <div class="logo">
                 <span class="logo-icon"><i class="fa-solid fa-wifi"></i></span>
-                <img src="{{ url_for('static', filename='image/logo_ourinet.png') }}" alt="Logo Ourinet" class="logo-img">
+                <img src="{{ url_for('static', filename='image/logo_ourinet.png') }}" alt="Logo Ourinet"
+                    class="logo-img">
             </div>
             <nav class="nav">
                 <ul>
@@ -33,25 +37,24 @@
     </header>
 
     <section class="hero" id="home">
+        <!-- Video Background -->
+        <div class="hero-video-container">
+            <iframe class="hero-background-video-embed" frameborder="0" allowfullscreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" title="Background Video"
+                src="https://www.youtube.com/embed/9HaU8NjH7bI?controls=0&rel=0&playsinline=1&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=9HaU8NjH7bI&origin=https%3A%2F%2Fwww.provedorjltelecom.com.br">
+            </iframe>
+        </div>
+
         <div class="container">
             <div class="hero-content">
                 <h1>Internet <span>Fibra Óptica</span> de Alta Velocidade</h1>
-                <p>A conexão mais rápida e estável para sua casa ou empresa com tecnologia de ponta e atendimento premium. Navegue sem limites com a qualidade Ourinet.</p>
+                <p>A conexão mais rápida e estável para sua casa ou empresa com tecnologia de ponta e atendimento
+                    premium. Navegue sem limites com a qualidade Ourinet.</p>
                 <div class="hero-buttons">
                     <a href="#planos" class="btn btn-primary">Conheça nossos planos</a>
                     <a href="#contato" class="btn btn-secondary">Fale conosco</a>
                 </div>
-            </div>
-            <div class="hero-image">
-                <div class="wifi-animation">
-                    <div class="wifi-circle"></div>
-                    <div class="wifi-circle"></div>
-                    <div class="wifi-circle"></div>
-                    <div class="wifi-circle"></div>
-                    <div class="wifi-icon"><i class="fas fa-wifi"></i></div>
-                </div>
-                <div class="light-pulse"></div>
-                <div class="fiber-network" id="fiberNetwork"></div>
             </div>
         </div>
     </section>
@@ -60,7 +63,8 @@
         <div class="container">
             <div class="section-header">
                 <h2>Por que escolher a <span>Ourinet</span>?</h2>
-                <p>Oferecemos a melhor experiência em conectividade com tecnologia de ponta e atendimento personalizado</p>
+                <p>Oferecemos a melhor experiência em conectividade com tecnologia de ponta e atendimento personalizado
+                </p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
@@ -68,28 +72,32 @@
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <h3>Alta Performance</h3>
-                    <p>Planos com até 1Gbps de velocidade, utilizando tecnologia FTTH e infraestrutura 100% em fibra óptica.</p>
+                    <p>Planos com até 1Gbps de velocidade, utilizando tecnologia FTTH e infraestrutura 100% em fibra
+                        óptica.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Rede Segura</h3>
-                    <p>Nossa infraestrutura conta com proteção contra ameaças, garantindo mais segurança para sua navegação.</p>
+                    <p>Nossa infraestrutura conta com proteção contra ameaças, garantindo mais segurança para sua
+                        navegação.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3>Suporte Premium</h3>
-                    <p>Conte com atendimento rápido e eficiente todos os dias, das 7h às 21h. Nosso time está pronto para te ajudar sempre que precisar.</p>
+                    <p>Conte com atendimento rápido e eficiente todos os dias, das 7h às 21h. Nosso time está pronto
+                        para te ajudar sempre que precisar.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-percentage"></i>
                     </div>
                     <h3>Estabilidade Garantida</h3>
-                    <p>99,9% de SLA (Acordo de Nível de Serviço) com compensação financeira em caso de indisponibilidade.</p>
+                    <p>99,9% de SLA (Acordo de Nível de Serviço) com compensação financeira em caso de
+                        indisponibilidade.</p>
                 </div>
             </div>
         </div>
@@ -113,19 +121,23 @@
                     <div class="plan-features">
                         <ul>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Wi-Fi Plus
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}"
+                                    alt="Deezer Premium" class="icon-deezer">
                                 Suporte técnico especializado
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 2 telas de TV
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Deezer Premium
                             </li>
                         </ul>
@@ -146,19 +158,23 @@
                     <div class="plan-features">
                         <ul>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Wi-Fi Plus
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}"
+                                    alt="Deezer Premium" class="icon-deezer">
                                 Suporte técnico especializado
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 4 telas de TV
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Deezer Premium
                             </li>
                         </ul>
@@ -178,19 +194,23 @@
                     <div class="plan-features">
                         <ul>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Wi-Fi Plus
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}"
+                                    alt="Deezer Premium" class="icon-deezer">
                                 Suporte técnico especializado
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 5 telas de TV
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Deezer Premium
                             </li>
                         </ul>
@@ -210,19 +230,23 @@
                     <div class="plan-features">
                         <ul>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/wi-fi.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Wi-Fi Plus
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}"
+                                    alt="Deezer Premium" class="icon-deezer">
                                 Suporte técnico especializado
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/ourinte_tv.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 6 telas de TV
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/deezer.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Deezer Premium
                             </li>
                         </ul>
@@ -253,15 +277,18 @@
                     <div class="radio-plan-features">
                         <ul>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/speed.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/speed.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 30 Mbps
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/shield.png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/shield.png') }}" alt="Deezer Premium"
+                                    class="icon-deezer">
                                 Estabilidade garantida
                             </li>
                             <li class="deezer-feature">
-                                <img src="{{ url_for('static', filename='image/headset(01).png') }}" alt="Deezer Premium" class="icon-deezer">
+                                <img src="{{ url_for('static', filename='image/headset(01).png') }}"
+                                    alt="Deezer Premium" class="icon-deezer">
                                 Suporte técnico especializado
                             </li>
                         </ul>
@@ -325,7 +352,9 @@
                         <div class="quote-icon">
                             <i class="fas fa-quote-left"></i>
                         </div>
-                        <p>Desde que contratei a Ourinet, minha experiência com internet mudou completamente. Velocidade incrível e nenhuma queda de conexão, mesmo durante picos de uso. O suporte técnico é ágil e resolve qualquer questão rapidamente.</p>
+                        <p>Desde que contratei a Ourinet, minha experiência com internet mudou completamente. Velocidade
+                            incrível e nenhuma queda de conexão, mesmo durante picos de uso. O suporte técnico é ágil e
+                            resolve qualquer questão rapidamente.</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
@@ -342,7 +371,9 @@
                         <div class="quote-icon">
                             <i class="fas fa-quote-left"></i>
                         </div>
-                        <p>O suporte técnico é excelente e sempre muito atencioso. A velocidade contratada é realmente a que recebo, sem surpresas desagradáveis. Na minha empresa, dependemos de conexão estável e a Ourinet nunca nos deixou na mão.</p>
+                        <p>O suporte técnico é excelente e sempre muito atencioso. A velocidade contratada é realmente a
+                            que recebo, sem surpresas desagradáveis. Na minha empresa, dependemos de conexão estável e a
+                            Ourinet nunca nos deixou na mão.</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
@@ -359,7 +390,9 @@
                         <div class="quote-icon">
                             <i class="fas fa-quote-left"></i>
                         </div>
-                        <p>Melhor provedor que já tive! A instalação foi rápida e o técnico muito profissional. Como streamer, preciso de upload rápido e estável, e a Ourinet entrega exatamente o que promete. Recomendo para todos que buscam internet de verdade!</p>
+                        <p>Melhor provedor que já tive! A instalação foi rápida e o técnico muito profissional. Como
+                            streamer, preciso de upload rápido e estável, e a Ourinet entrega exatamente o que promete.
+                            Recomendo para todos que buscam internet de verdade!</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
@@ -376,7 +409,9 @@
                         <div class="quote-icon">
                             <i class="fas fa-quote-left"></i>
                         </div>
-                        <p>Na zona rural onde moro, a internet via rádio da Ourinet foi a única que conseguiu atender com qualidade. Velocidade constante e suporte que realmente resolve os problemas. Depois de anos sofrendo com conexão ruim, finalmente tenho internet decente.</p>
+                        <p>Na zona rural onde moro, a internet via rádio da Ourinet foi a única que conseguiu atender
+                            com qualidade. Velocidade constante e suporte que realmente resolve os problemas. Depois de
+                            anos sofrendo com conexão ruim, finalmente tenho internet decente.</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
@@ -445,8 +480,8 @@
                                 <input type="text" id="nome" placeholder="Seu nome completo" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" placeholder="Seu melhor email" required>
+                                <label for="telefone">Telefone</label>
+                                <input type="tel" id="telefone" placeholder="Seu número de telefone" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -455,7 +490,8 @@
                         </div>
                         <div class="form-group">
                             <label for="mensagem">Mensagem</label>
-                            <textarea id="mensagem" placeholder="Escreva sua mensagem aqui" required rows="5"></textarea>
+                            <textarea id="mensagem" placeholder="Escreva sua mensagem aqui" required
+                                rows="5"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
                     </form>
@@ -472,7 +508,8 @@
                         <span class="logo-icon"><i class="fa-solid fa-wifi"></i></span>
                         <h1>Ourinet</h1>
                     </div>
-                    <p>Oferecendo a melhor experiência em internet fibra óptica e rádio com velocidade, estabilidade e atendimento de excelência desde 2004.</p>
+                    <p>Oferecendo a melhor experiência em internet fibra óptica e rádio com velocidade, estabilidade e
+                        atendimento de excelência desde 2004.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/ourinettelecom/"><i class="fab fa-instagram"></i></a>
                         <a href="https://wa.me/5587938742613"><i class="fab fa-whatsapp"></i></a>
@@ -513,4 +550,5 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
