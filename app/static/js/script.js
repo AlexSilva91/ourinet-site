@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const containerWidth = fiberNetwork.parentElement.offsetWidth;
         const containerHeight = fiberNetwork.parentElement.offsetHeight;
 
-        // Create nodes
         const nodeCount = 15;
         const nodes = [];
 
@@ -59,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const node = document.createElement('div');
             node.className = 'fiber-node';
 
-            // Random position within container with padding
             const x = 50 + Math.random() * (containerWidth - 100);
             const y = 50 + Math.random() * (containerHeight - 100);
 
@@ -70,9 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fiberNetwork.appendChild(node);
         }
 
-        // Create connections between nodes
         nodes.forEach((nodeA, i) => {
-            // Connect to 2-3 closest nodes
             const closestNodes = nodes
                 .map((nodeB, j) => ({ node: nodeB, distance: Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y), index: j }))
                 .filter(item => item.index !== i)
@@ -96,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 fiberNetwork.appendChild(connection);
 
-                // Animate the connection
                 let direction = 1;
                 setInterval(() => {
                     const currentOpacity = parseFloat(connection.style.opacity);
@@ -111,15 +106,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize Map
     const mapElement = document.getElementById('map');
     if (mapElement) {
-        // Coordinates for the map center (example coordinates for Brazil)
         const map = L.map('map').setView([-7.884913749549813, -40.08501742303437], 12);
 
-        // Add tile layer (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Add coverage areas (example coordinates)
         const coverageAreas = [
             { coords: [-7.884913749549813, -40.08501742303437], radius: 2000, color: '#FFD700' },
             { coords: [-7.510507213934869, -39.72169733051941], radius: 1500, color: '#FFD700' },
@@ -136,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }).addTo(map);
         });
 
-        // Add markers for radio towers (example coordinates)
         const radioTowers = [
             { coords: [-7.884913749549813, -40.08501742303437], name: 'Central Ouricuri' },
             { coords: [-7.510507213934869, -39.72169733051941], name: 'Filial EXU' },
@@ -155,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .bindPopup(`<b>${tower.name}</b><br>Ponto de acesso rádio`);
         });
 
-        // Fit map to show all coverage areas
         const bounds = L.latLngBounds(coverageAreas.map(area => area.coords));
         map.fitBounds(bounds.pad(0.2));
     }
@@ -190,27 +180,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Form submission handlers
+    // Form submission handler (WhatsApp)
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            // Here you would normally send the form data to the server
-            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+
+            const nome = document.getElementById('nome').value.trim();
+            const assunto = document.getElementById('assunto').value.trim();
+            const mensagem = document.getElementById('mensagem').value.trim();
+
+            const whatsappMessage = `Olá, meu nome é ${nome}.
+Assunto: ${assunto}
+Mensagem: ${mensagem}`;
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappNumber = '558738742613';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappURL, '_blank');
             this.reset();
         });
     }
 
+    // Coverage checker form
     const coverageForm = document.getElementById('coverage-checker');
     if (coverageForm) {
         coverageForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            // Here you would normally check coverage with the server
             alert('Verificando disponibilidade para o endereço informado...');
             this.reset();
         });
     }
 
+    // Newsletter form
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function (e) {
@@ -236,7 +239,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Set initial state for animated elements
     const animatedElements = document.querySelectorAll('.feature-card, .plan-card, .radio-plan-card, .testimonial-card');
     animatedElements.forEach(element => {
         element.style.opacity = '0';
@@ -245,5 +247,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     window.addEventListener('scroll', animateOnScroll);
-    animateOnScroll(); // Run once on load
+    animateOnScroll();
 });
