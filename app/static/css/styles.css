@@ -2501,7 +2501,7 @@ img {
     background: var(--dark-color);
 }
 
-/* Container do vídeo - AJUSTADO */
+/* Container do vídeo */
 .hero-video-container {
     position: absolute;
     top: 0;
@@ -2517,40 +2517,19 @@ img {
     top: 50%;
     left: 50%;
     width: 100vw;
-    /* Largura da viewport */
     height: 100vh;
-    /* Altura da viewport */
     transform: translate(-50%, -50%);
     object-fit: cover;
-
-    /* Garante que o vídeo cubra toda a área em qualquer proporção */
     min-width: 100%;
     min-height: 100%;
-
-    /* Calcula dinamicamente o tamanho para preencher sem margens */
     width: 100vw;
     height: 56.25vw;
-    /* Proporção 16:9 baseada na largura */
     min-height: 100vh;
     min-width: 177.77vh;
-    /* Proporção 16:9 baseada na altura */
 }
 
-/* Overlay amarelo transparente */
+/* Overlay escuro para melhor contraste - PRIMEIRO LAYER */
 .hero-video-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(247, 195, 4, 0.25);
-    z-index: 1;
-    mix-blend-mode: overlay;
-}
-
-/* Overlay escuro para melhor contraste */
-.hero-video-container::after {
     content: '';
     position: absolute;
     top: 0;
@@ -2561,10 +2540,29 @@ img {
             rgba(0, 0, 0, 0.7) 0%,
             rgba(0, 0, 0, 0.5) 50%,
             rgba(0, 0, 0, 0.7) 100%);
-    z-index: 2;
+    z-index: 1;
+    /* Acima do vídeo */
 }
 
-/* Conteúdo do hero - MELHORADO */
+/* Overlay amarelo - SEGUNDO LAYER (ACIMA DO ESCURO) */
+.hero-video-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #F7C102;
+    /* Cor amarela especificada */
+    opacity: 0.6;
+    /* 60% de transparência */
+    z-index: 2;
+    /* Acima do overlay escuro */
+    mix-blend-mode: overlay;
+    /* Opcional: para efeito de blend */
+}
+
+/* Conteúdo do hero */
 .hero-content {
     max-width: 700px;
     text-align: left;
@@ -2578,14 +2576,16 @@ img {
         0 20px 40px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    position: left;
+    position: relative;
     overflow: hidden;
+    z-index: 3;
+    /* Acima de todos os overlays */
 }
 
-/* Efeito de brilho sutil no fundo do content */
+/* Resto do CSS permanece igual */
 .hero-content::before {
     content: '';
-    position: left;
+    position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
@@ -2596,6 +2596,14 @@ img {
             transparent 70%);
     z-index: -1;
     animation: subtleGlow 6s ease-in-out infinite;
+}
+
+/* Adicione isso ao seu CSS existente */
+.hero-content span {
+    color: var(--primary-color);
+    /* Ou a cor que você quiser */
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes subtleGlow {
@@ -2612,7 +2620,7 @@ img {
     }
 }
 
-/* Botões - MELHORADOS */
+/* Botões e media queries permanecem iguais */
 .hero-buttons {
     display: flex;
     gap: 25px;
@@ -2732,15 +2740,11 @@ img {
     }
 }
 
-/* Garantir que o vídeo funcione em mobile */
 @media (max-width: 768px) {
     .hero-video-container {
         display: block;
     }
-}
 
-/* Ajustes específicos para o vídeo sem margens */
-@media (max-width: 768px) {
     .hero-background-video-embed {
         width: 100vw;
         height: 100vh;
